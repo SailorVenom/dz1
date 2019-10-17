@@ -5,25 +5,27 @@
 struct set
         {
         int n ;
-        int *elements;
+    char *elements;
         };
 
 void initSet(struct set *_set);
 
 void inputSet(struct  set *_set);
 
-bool checkElement(int element, struct set *_set);
+bool checkElement(char element, struct set *_set);
 
-void addElement(int element, struct set *_set);
+void addElement(char element, struct set *_set);
 
 void printSet(struct set _set);
 
-void deleteElementSet(int element, struct set *_set);
+void deleteElementSet(char element, struct set *_set);
 
 void destroySet(struct set *_set);
 
 void initTwoSets(struct set *s1, struct set *s2);
 
+
+char getOneSymbol(char *delEl, const char *text);
 
 int main() {
     printf("Hello, World!\n");
@@ -31,10 +33,15 @@ int main() {
     initSet(&s3);
     initSet(&s4);
     initSet(&_set1);
-    initTwoSets(&s3,&s4);
+   // initTwoSets(&s3,&s4);
     inputSet((&_set1));
     printSet(_set1);
-    deleteElementSet(2,&_set1);
+    
+    char delEl;
+    
+    delEl = getOneSymbol(&delEl, "Р’РІРµРґРёС‚Рµ СЌР»РµРјРµРЅС‚ РґР»СЏ СѓРґР°Р»РµРЅРёСЏ: ");
+    
+    deleteElementSet(delEl,&_set1);
     printSet(_set1);
     destroySet(&_set1);
     destroySet(&s3);
@@ -42,29 +49,45 @@ int main() {
     return 0;
 }
 
+char getOneSymbol(char *delEl, const char *text)
+{
+    printf("%s "),text;
+    while (true)
+    {
+        scanf("%c", delEl);
+        if((*delEl) != '\n')
+            break;
+    }
+    return (*delEl);
+}
+
 
 void inputSet(struct set *_set)
 {
     int n;
-    printf("Введите количество элементов для ввода \n");
+    printf("Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ РґР»СЏ РІРІРѕРґР° \n");
     scanf("%d",&n);
 
    // (*_set).elements = (int*)malloc(_set->n * sizeof(int));
     for (int i = 0; i < n; ++i)
     {
-        int k;
-        printf("Введите %d-ый элемент\n",i+1);
-        scanf("%d",&k);
-        addElement(k,_set);
+        char k;
+        printf("Р’РІРµРґРёС‚Рµ %d-С‹Р№ СЌР»РµРјРµРЅС‚\n",i+1);
+        
+        scanf("%c",&k);
+        if(k!='\n')
+            addElement(k,_set);
+        else
+            i--;
 
 
     }
-    printf("введено %d элементов\n", _set->n);
+    printf("РІРІРµРґРµРЅРѕ %d СЌР»РµРјРµРЅС‚РѕРІ\n", _set->n);
 
 
 }
 
-bool checkElement(int element, struct set *_set)
+bool checkElement(char element, struct set *_set)
 {
     for (int i = 0; i < _set->n; ++i)
     {
@@ -74,16 +97,16 @@ bool checkElement(int element, struct set *_set)
     return true;
 }
 
-void addElement(int element, struct set *_set)
+void addElement(char element, struct set *_set)
 {
     if(_set->n == 0)
     {
-        _set->elements = (int*)malloc(sizeof(int));
+        _set->elements = (char *)malloc(sizeof(char));
         _set->elements[0] = element;
         _set->n++;
     } else if (checkElement(element,_set))
     {
-        int *tmpArr = (int*)malloc((_set->n+1)*sizeof(int));
+        char *tmpArr = (char *)malloc((_set->n+1)*sizeof(char));
         for (int i = 0; i < _set->n; ++i)
         {
             tmpArr[i] = _set->elements[i];
@@ -103,21 +126,21 @@ void initSet(struct set *_set)
 
 void printSet(struct set _set)
 {
-    printf("множество сожержит следующие элементы: \n");
+    printf("РјРЅРѕР¶РµСЃС‚РІРѕ СЃРѕР¶РµСЂР¶РёС‚ СЃР»РµРґСѓСЋС‰РёРµ СЌР»РµРјРµРЅС‚С‹: \n");
     for (int i = 0; i < _set.n; ++i)
     {
-        printf("%d ",_set.elements[i]);
+        printf("%c ",_set.elements[i]);
     }
     printf("\n");
 }
 
-void deleteElementSet(int element, struct set *_set)
+void deleteElementSet(char element, struct set *_set)
 {
     if(_set->n == 0)
         return;
     if(!checkElement(element,_set))
     {
-        int *tmpArr = (int*)malloc((_set->n-1)*sizeof(int));
+        char *tmpArr = (char *)malloc((_set->n-1)*sizeof(char));
         bool isDeleted = false;
         for (int i = 0; i < _set->n; ++i)
         {
@@ -149,8 +172,8 @@ void destroySet(struct set *_set)
 
 void initTwoSets(struct set *s1, struct set *s2)
 {
-    printf("Введите первое множество\n");
+    printf("Р’РІРµРґРёС‚Рµ РїРµСЂРІРѕРµ РјРЅРѕР¶РµСЃС‚РІРѕ\n");
     inputSet(s1);
-    printf("Введите второе множество\n");
+    printf("Р’РІРµРґРёС‚Рµ РІС‚РѕСЂРѕРµ РјРЅРѕР¶РµСЃС‚РІРѕ\n");
     inputSet(s2);
 }
